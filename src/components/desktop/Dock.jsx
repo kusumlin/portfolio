@@ -36,27 +36,6 @@ function PinkBooksIcon() {
   )
 }
 
-function DocumentIcon() {
-  return (
-    <svg viewBox="0 0 56 56" fill="none" className="w-full h-full">
-      <defs>
-        <linearGradient id="di_bg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F6F6F8" />
-          <stop offset="100%" stopColor="#EAEAEF" />
-        </linearGradient>
-      </defs>
-      <rect width="56" height="56" rx="13" fill="url(#di_bg)" />
-      <rect x="13" y="10" width="30" height="36" rx="3" fill="rgba(0,0,0,0.06)" transform="translate(1,2)" />
-      <rect x="13" y="10" width="30" height="36" rx="3" fill="white" />
-      <path d="M34 10 L43 19 L34 19 Z" fill="#E0E0EA" />
-      <line x1="34" y1="10" x2="43" y2="19" stroke="#D0D0DC" strokeWidth="1" />
-      <rect x="17" y="24" width="18" height="2.5" rx="1.25" fill="#B8C8F0" />
-      <rect x="17" y="29" width="22" height="2.5" rx="1.25" fill="#B8C8F0" />
-      <rect x="17" y="34" width="16" height="2.5" rx="1.25" fill="#C8D4F4" />
-      <rect x="17" y="39" width="12" height="2" rx="1" fill="#D0DCF8" />
-    </svg>
-  )
-}
 
 function MailIcon() {
   return (
@@ -86,8 +65,7 @@ const BEFORE_SEP = [
 ]
 
 const AFTER_SEP = [
-  { id: 'contacts', label: 'Contact',   Icon: DocumentIcon,   action: 'open'   },
-  { id: 'email',    label: 'Email',     Icon: MailIcon,       action: 'mailto', href: `mailto:${resume.email}` },
+  { id: 'contacts', label: 'Contact',   Icon: MailIcon,       action: 'open'   },
   { id: 'github',   label: 'GitHub',    Icon: null,           action: 'link',   href: resume.github   },
   { id: 'linkedin', label: 'LinkedIn',  Icon: null,           action: 'link',   href: resume.linkedin },
 ]

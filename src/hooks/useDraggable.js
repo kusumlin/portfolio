@@ -1,20 +1,30 @@
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect, useLayoutEffect } from 'react'
 
-/**
- * Makes a component draggable via mouse events.
- * Attach `onMouseDown` to the drag handle element.
- * `pos` gives the current {x, y} position.
- */
+// Bypasses React state entirely — writes transform directly to DOM.
+// Zero re-renders during drag = no layout reflow, true 60fps.
 export function useDraggable(initialPos = { x: 120, y: 60 }) {
-  const [pos, setPos] = useState(initialPos)
+  const ref     = useRef(null)
   const dragging = useRef(false)
-  const offset = useRef({ x: 0, y: 0 })
+  const pos      = useRef(initialPos)
+  const offset   = useRef({ x: 0, y: 0 })
+
+  // Set initial position before first paint (no flash)
+  useLayoutEffect(() => {
+    if (ref.current) {
+      ref.current.style.transform =
+        `translate3d(${initialPos.x}px, ${initialPos.y}px, 0)`
+    }
+  }, [])
 
   const onMouseDown = (e) => {
     if (e.button !== 0) return
     dragging.current = true
-    offset.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }
+    offset.current = {
+      x: e.clientX - pos.current.x,
+      y: e.clientY - pos.current.y,
+    }
     document.body.classList.add('dragging')
+    if (ref.current) ref.current.style.willChange = 'transform'
   }
 
   useEffect(() => {
@@ -22,15 +32,18 @@ export function useDraggable(initialPos = { x: 120, y: 60 }) {
       if (!dragging.current) return
       const x = Math.max(0, e.clientX - offset.current.x)
       const y = Math.max(0, e.clientY - offset.current.y)
-      setPos({ x, y })
-    }
-    const onUp = () => {
-      if (dragging.current) {
-        dragging.current = false
-        document.body.classList.remove('dragging')
+      pos.current = { x, y }
+      if (ref.current) {
+        ref.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
       }
     }
-    window.addEventListener('mousemove', onMove)
+    const onUp = () => {
+      if (!dragging.current) return
+      dragging.current = false
+      document.body.classList.remove('dragging')
+      if (ref.current) ref.current.style.willChange = 'auto'
+    }
+    window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mouseup', onUp)
     return () => {
       window.removeEventListener('mousemove', onMove)
@@ -38,5 +51,5 @@ export function useDraggable(initialPos = { x: 120, y: 60 }) {
     }
   }, [])
 
-  return { pos, onMouseDown }
+  return { ref, onMouseDown }
 }

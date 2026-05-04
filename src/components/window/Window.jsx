@@ -1,5 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDraggable } from '../../hooks/useDraggable'
+
+function TrafficLight({ color, symbol, onClick, onMouseDown }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <button
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        width: 14,
+        height: 14,
+        borderRadius: '50%',
+        background: color,
+        border: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: onClick ? 'pointer' : 'default',
+        flexShrink: 0,
+        boxShadow: `inset 0 0 0 0.5px rgba(0,0,0,0.12)`,
+      }}
+    >
+      {hovered && (
+        <span style={{ fontSize: 9, fontWeight: 900, color: 'rgba(0,0,0,0.45)', lineHeight: 1, userSelect: 'none' }}>
+          {symbol}
+        </span>
+      )}
+    </button>
+  )
+}
 
 export default function Window({
   title,
@@ -12,16 +43,19 @@ export default function Window({
   onFocus,
   zIndex = 10,
 }) {
-  const { pos, onMouseDown } = useDraggable(initialPos)
+  // Outer div: handles position via transform (no CSS animation here)
+  // Inner div: runs the slide-down animation independently
+  // This separation prevents the animation's final `transform` from overriding position.
+  const { ref, onMouseDown } = useDraggable(initialPos)
 
   return (
     <div
-      className="absolute window-slide-down select-none"
-      style={{ left: pos.x, top: pos.y, width, zIndex }}
+      ref={ref}
+      className="absolute select-none"
+      style={{ left: 0, top: 0, width, zIndex }}
       onMouseDown={onFocus}
     >
-      <div
-        className="rounded-2xl overflow-hidden mac-shadow"
+      <div className="window-slide-down rounded-2xl overflow-hidden mac-shadow"
         style={{ border: '1px solid rgba(210,200,185,0.4)' }}
       >
         {/* ── Title bar ── */}
@@ -29,31 +63,22 @@ export default function Window({
           className="flex items-center gap-3 px-4 py-[11px] cursor-grab active:cursor-grabbing"
           style={{
             background: 'rgba(253,250,244,0.96)',
-            backdropFilter: 'blur(28px) saturate(160%)',
-            WebkitBackdropFilter: 'blur(28px) saturate(160%)',
+            backdropFilter: 'blur(20px) saturate(160%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(160%)',
             borderBottom: '1px solid rgba(210,200,180,0.3)',
           }}
           onMouseDown={onMouseDown}
         >
           {/* Traffic-light controls */}
-          <div className="flex items-center gap-[7px]" onMouseDown={(e) => e.stopPropagation()}>
-            <button
-              onClick={(e) => { e.stopPropagation(); onClose?.() }}
-              onMouseDown={(e) => e.stopPropagation()}
-              className="w-3 h-3 rounded-full transition-opacity hover:opacity-80 active:opacity-60"
-              style={{ background: '#ff5f57' }}
-              title="Close"
+          <div className="flex items-center gap-[7px]" onMouseDown={e => e.stopPropagation()}>
+            <TrafficLight
+              color="#ff5f57"
+              symbol="✕"
+              onClick={e => { e.stopPropagation(); onClose?.() }}
+              onMouseDown={e => e.stopPropagation()}
             />
-            <button
-              className="w-3 h-3 rounded-full opacity-90"
-              style={{ background: '#febc2e' }}
-              title="Minimize"
-            />
-            <button
-              className="w-3 h-3 rounded-full opacity-90"
-              style={{ background: '#28c840' }}
-              title="Maximize"
-            />
+            <TrafficLight color="#febc2e" symbol="−" />
+            <TrafficLight color="#28c840" symbol="+" />
           </div>
 
           {/* Title */}
@@ -62,18 +87,11 @@ export default function Window({
             <span className="text-[13px] font-semibold tracking-tight" style={{ color: '#6b5c45' }}>{title}</span>
           </div>
 
-          {/* Spacer to keep title visually centered */}
           <div className="w-[52px]" />
         </div>
 
         {/* ── Content area ── */}
-        <div
-          style={{
-            height,
-            background: '#fdfaf4',
-            overflow: 'hidden',
-          }}
-        >
+        <div style={{ height, background: '#fdfaf4', overflow: 'hidden' }}>
           {children}
         </div>
       </div>

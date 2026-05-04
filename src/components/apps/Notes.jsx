@@ -5,7 +5,7 @@ function TechBadge({ tech }) {
   return (
     <span
       className="inline-block px-2 py-0.5 rounded-full text-[11px] font-medium mr-1 mb-1"
-      style={{ background: '#f0ebe0', color: '#8b6f47' }}
+      style={{ background: '#ede8f8', color: '#7060a0' }}
     >
       {tech}
     </span>
@@ -15,9 +15,9 @@ function TechBadge({ tech }) {
 function ProjectCard({ project, index }) {
   const [hovered, setHovered] = useState(false)
   const headerColors = [
-    { from: '#f9c46b', to: '#f5a623' },
-    { from: '#a8d8ea', to: '#6fb3cc' },
-    { from: '#b8e0b8', to: '#7bbf7b' },
+    { from: '#d4c2f0', to: '#b8a0e0' },
+    { from: '#f0c2d8', to: '#d8a0bc' },
+    { from: '#c2cef0', to: '#a0b2e0' },
   ]
   const c = headerColors[index % headerColors.length]
 
@@ -37,14 +37,14 @@ function ProjectCard({ project, index }) {
       </div>
       <div className="p-4" style={{ background: 'white' }}>
         <p className="text-[11px] leading-relaxed mb-3" style={{ color: '#6b5c45' }}>{project.description}</p>
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3 text-[11px] font-medium" style={{ background: '#fef5e7', color: '#b07d30' }}>
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3 text-[11px] font-medium" style={{ background: '#f0ecfb', color: '#8060b0' }}>
           <span>★</span><span>{project.impact}</span>
         </div>
         <div>{project.tech.map(t => <TechBadge key={t} tech={t} />)}</div>
         {(project.github || project.demo) && (
           <div className="flex gap-2 mt-3">
             {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1 rounded-full" style={{ background: '#f0ebe0', color: '#6b5c45' }}>GitHub ↗</a>}
-            {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1 rounded-full text-white" style={{ background: '#b07d30' }}>Live Demo ↗</a>}
+            {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1 rounded-full text-white" style={{ background: '#8060b0' }}>Live Demo ↗</a>}
           </div>
         )}
       </div>
@@ -67,7 +67,7 @@ function ResumeView() {
               </div>
               <span className="text-[10px] shrink-0 ml-2" style={{ color: '#b09070' }}>{e.period}</span>
             </div>
-            <p className="text-[11px] mt-1" style={{ color: '#b07d30' }}>GPA {e.gpa} · {e.location}</p>
+            <p className="text-[11px] mt-1" style={{ color: '#8060b0' }}>GPA {e.gpa} · {e.location}</p>
             <div className="mt-2 flex flex-wrap gap-1">
               {e.coursework.map(c => <TechBadge key={c} tech={c} />)}
             </div>
@@ -89,7 +89,7 @@ function ResumeView() {
             <ul className="mt-2 space-y-1">
               {exp.bullets.map((b, i) => (
                 <li key={i} className="text-[11px] leading-relaxed flex gap-1.5" style={{ color: '#6b5c45' }}>
-                  <span style={{ color: '#b07d30', marginTop: 1 }}>•</span>
+                  <span style={{ color: '#8060b0', marginTop: 1 }}>•</span>
                   <span>{b}</span>
                 </li>
               ))}
@@ -115,7 +115,7 @@ function ResumeView() {
         <div className="space-y-2">
           {resume.achievements.map(a => (
             <div key={a.title} className="p-3 rounded-xl flex gap-3 items-start" style={{ background: 'white', border: '1px solid rgba(210,195,170,0.35)' }}>
-              <span style={{ color: '#b07d30', fontSize: 16, marginTop: 1 }}>★</span>
+              <span style={{ color: '#8060b0', fontSize: 16, marginTop: 1 }}>★</span>
               <div>
                 <p className="text-xs font-semibold" style={{ color: '#3d2e1e' }}>{a.title}</p>
                 <p className="text-[11px] mt-0.5" style={{ color: '#8b6f47' }}>{a.detail}</p>
@@ -142,8 +142,8 @@ function SidebarItem({ label, active, onClick }) {
     <button
       onClick={onClick}
       className="w-full text-left px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-      style={active ? { background: '#e8d9c0', color: '#7a5c30' } : { color: '#9b8060' }}
-      onMouseEnter={e => { if (!active) e.currentTarget.style.background = '#efe7d5' }}
+      style={active ? { background: '#e2d8f2', color: '#6b52a0' } : { color: '#9585b8' }}
+      onMouseEnter={e => { if (!active) e.currentTarget.style.background = '#ebe5f5' }}
       onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent' }}
     >
       {label}
@@ -158,12 +158,12 @@ export default function Notes() {
     <div className="h-full flex flex-col">
       <div className="flex h-full">
         {/* Sidebar */}
-        <div className="w-44 shrink-0 flex flex-col p-4 gap-1" style={{ background: '#f5f0e8', borderRight: '1px solid rgba(210,195,170,0.4)' }}>
-          <p className="text-[10px] font-semibold uppercase tracking-widest mb-2 px-2" style={{ color: '#b09070' }}>Portfolio</p>
+        <div className="w-44 shrink-0 flex flex-col p-4 gap-1" style={{ background: '#f0ecf8', borderRight: '1px solid rgba(190,178,220,0.4)' }}>
+          <p className="text-[10px] font-semibold uppercase tracking-widest mb-2 px-2" style={{ color: '#a898c8' }}>Portfolio</p>
           <SidebarItem label="Projects" active={view === 'projects'} onClick={() => setView('projects')} />
           <SidebarItem label="Resume"   active={view === 'resume'}   onClick={() => setView('resume')}   />
           <div className="mt-auto">
-            <p className="text-[10px] px-2" style={{ color: '#b09070' }}>{resume.projects.length} projects</p>
+            <p className="text-[10px] px-2" style={{ color: '#a898c8' }}>{resume.projects.length} projects</p>
           </div>
         </div>
 
