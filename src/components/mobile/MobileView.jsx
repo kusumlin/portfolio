@@ -65,12 +65,13 @@ function AboutTab() {
       <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, paddingTop: 8 }}>
         {/* Tiny floating accents */}
         {[
-          { e: '✨', top: '4%',  left: '6%',  size: 16, anim: 'floatA', delay: '0s'   },
-          { e: '🌸', top: '8%',  right: '8%', size: 14, anim: 'floatB', delay: '0.6s' },
-          { e: '💫', top: '38%', left: '4%',  size: 13, anim: 'floatC', delay: '1.2s' },
-          { e: '🌿', top: '42%', right: '5%', size: 14, anim: 'floatA', delay: '0.9s' },
-          { e: '⭐', top: '72%', left: '8%',  size: 13, anim: 'floatB', delay: '0.3s' },
-          { e: '🦋', top: '68%', right: '6%', size: 14, anim: 'floatC', delay: '1.5s' },
+          { e: '✨', top: '2%',  left: '3%',   size: 15, anim: 'floatA', delay: '0s'   },
+          { e: '🌸', top: '6%',  right: '4%',  size: 13, anim: 'floatB', delay: '0.6s' },
+          { e: '🚀', top: '18%', left: '5%',   size: 14, anim: 'floatC', delay: '0.4s' },
+          { e: '💫', top: '22%', right: '3%',  size: 13, anim: 'floatA', delay: '1.2s' },
+          { e: '🌿', top: '55%', left: '2%',   size: 14, anim: 'floatB', delay: '0.9s' },
+          { e: '⭐', top: '60%', right: '4%',  size: 13, anim: 'floatC', delay: '0.3s' },
+          { e: '🦋', top: '80%', left: '10%',  size: 13, anim: 'floatA', delay: '1.5s' },
         ].map((s, i) => (
           <span key={i} style={{
             position: 'absolute', top: s.top, left: s.left, right: s.right,
