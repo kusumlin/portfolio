@@ -72,7 +72,7 @@ function AboutTab() {
           { e: '🌿', top: '45%', left: '2%',   size: 14, anim: 'floatB', delay: '0.9s' },
           { e: '🏎️', top: '77%', right: '8%',  size: 14, anim: 'floatC', delay: '0.3s' },
           { e: '🦋', top: '75%', left: '8%',  size: 13, anim: 'floatA', delay: '1.5s' },
-          { e: '🪼', top: '20%', right: '14%',  size: 13, anim: 'floatA', delay: '1.2s' }
+          { e: '🪼', top: '22%', right: '14%',  size: 13, anim: 'floatA', delay: '1.2s' }
         ].map((s, i) => (
           <span key={i} style={{
             position: 'absolute', top: s.top, left: s.left, right: s.right,
