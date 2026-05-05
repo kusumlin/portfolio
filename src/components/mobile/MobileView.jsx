@@ -62,7 +62,23 @@ function TechBadge({ tech }) {
 function AboutTab() {
   return (
     <div style={{ padding: '24px 20px 32px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, paddingTop: 8 }}>
+      <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, paddingTop: 8 }}>
+        {/* Tiny floating accents */}
+        {[
+          { e: '✨', top: '4%',  left: '6%',  size: 16, anim: 'floatA', delay: '0s'   },
+          { e: '🌸', top: '8%',  right: '8%', size: 14, anim: 'floatB', delay: '0.6s' },
+          { e: '💫', top: '38%', left: '4%',  size: 13, anim: 'floatC', delay: '1.2s' },
+          { e: '🌿', top: '42%', right: '5%', size: 14, anim: 'floatA', delay: '0.9s' },
+          { e: '⭐', top: '72%', left: '8%',  size: 13, anim: 'floatB', delay: '0.3s' },
+          { e: '🦋', top: '68%', right: '6%', size: 14, anim: 'floatC', delay: '1.5s' },
+        ].map((s, i) => (
+          <span key={i} style={{
+            position: 'absolute', top: s.top, left: s.left, right: s.right,
+            fontSize: s.size, opacity: 0.7,
+            animation: `${s.anim} ${3.5 + i * 0.3}s ease-in-out ${s.delay} infinite`,
+            pointerEvents: 'none',
+          }}>{s.e}</span>
+        ))}
         <div style={{
           width: 110, height: 110, borderRadius: '50%', overflow: 'hidden',
           border: '4px solid rgba(255,255,255,0.9)',
@@ -80,7 +96,7 @@ function AboutTab() {
           <a href={resume.linkedin} target="_blank" rel="noopener noreferrer" style={{ padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: 600, background: '#0077b5', color: 'white', textDecoration: 'none' }}>LinkedIn</a>
           <a href={`mailto:${resume.email}`} style={{ padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: 600, background: '#ede8f8', color: '#7060a0', textDecoration: 'none' }}>Email</a>
         </div>
-      </div>
+      </div> {/* end floating emoji wrapper */}
 
       <Card label="About">
         <p style={{ fontSize: 14, color: '#3c3c43', lineHeight: 1.7 }}>{resume.summary}</p>
