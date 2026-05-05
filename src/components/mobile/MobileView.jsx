@@ -260,7 +260,7 @@ export default function MobileView() {
         {/* Sticky header */}
         <div style={{
           position: 'sticky', top: 0, zIndex: 50,
-          background: 'rgba(253,250,244,0.94)',
+          background: 'rgba(25, 0, 107, 0.94)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           borderBottom: '1px solid rgba(180,160,220,0.2)',
@@ -272,7 +272,7 @@ export default function MobileView() {
               <button key={tab} onClick={() => setActiveTab(tab)} style={{
                 padding: '8px 14px', background: 'none', border: 'none', cursor: 'pointer',
                 fontSize: 13, fontWeight: activeTab === tab ? 700 : 500,
-                color: activeTab === tab ? '#7060a0' : '#8e8e93',
+                color: activeTab === tab ? '#7060a0' : '#ffffff',
                 borderBottom: activeTab === tab ? '2px solid #7060a0' : '2px solid transparent',
                 whiteSpace: 'nowrap', flexShrink: 0,
               }}>
