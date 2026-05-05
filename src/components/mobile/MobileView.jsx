@@ -260,13 +260,13 @@ export default function MobileView() {
         {/* Sticky header */}
         <div style={{
           position: 'sticky', top: 0, zIndex: 50,
-          background: 'rgba(25, 0, 107, 0.94)',
+          background: 'rgba(22, 8, 68, 0.94)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           borderBottom: '1px solid rgba(180,160,220,0.2)',
           padding: '12px 20px 0',
         }}>
-          <p style={{ fontSize: 15, fontWeight: 700, color: '#1c1c1e', marginBottom: 10 }}>{resume.name}</p>
+          <p style={{ fontSize: 15, fontWeight: 700, color: '#ffffff', marginBottom: 10 }}>{resume.name}</p>
           <div style={{ display: 'flex', overflowX: 'auto', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
             {TABS.map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)} style={{
