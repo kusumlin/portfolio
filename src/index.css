@@ -111,6 +111,16 @@ html, body, #root {
 .float-b { will-change: transform; animation: floatB 5s   cubic-bezier(0.4, 0, 0.2, 1) 1s  infinite; }
 .float-c { will-change: transform; animation: floatC 4.5s cubic-bezier(0.4, 0, 0.2, 1) 2s  infinite; }
 
+/* Floating sticker hover — 20% scale up */
+.floating-sticker {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+.floating-sticker:hover {
+  transform: scale(1.35) !important;
+  animation-play-state: paused;
+}
+
 /* Sticker hover pop */
 .sticker-fg {
   transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1);

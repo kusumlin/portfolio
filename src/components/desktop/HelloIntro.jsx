@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 /**
  * Full-screen intro overlay inspired by khushipatel.vercel.app
@@ -50,7 +50,7 @@ export default function HelloIntro({ onDone }) {
           display: 'inline-block',
         }}
       >
-        Hi! I&apos;m Kusum
+        Hello,
       </span>
 
       {/* Subtle sparkle decorations */}

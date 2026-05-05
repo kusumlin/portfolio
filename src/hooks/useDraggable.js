@@ -30,11 +30,16 @@ export function useDraggable(initialPos = { x: 120, y: 60 }) {
   useEffect(() => {
     const onMove = (e) => {
       if (!dragging.current) return
-      const x = Math.max(0, e.clientX - offset.current.x)
-      const y = Math.max(0, e.clientY - offset.current.y)
+      const el = ref.current
+      const winW = el ? el.offsetWidth  : 300
+      const winH = 44 // title bar height — enough to always grab it
+      const maxX = window.innerWidth  - winW
+      const maxY = window.innerHeight - winH
+      const x = Math.min(Math.max(0, e.clientX - offset.current.x), maxX)
+      const y = Math.min(Math.max(44, e.clientY - offset.current.y), maxY) // 44 = menu bar height
       pos.current = { x, y }
-      if (ref.current) {
-        ref.current.style.transform = `translate3d(${x}px, ${y}px, 0)`
+      if (el) {
+        el.style.transform = `translate3d(${x}px, ${y}px, 0)`
       }
     }
     const onUp = () => {

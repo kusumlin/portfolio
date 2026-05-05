@@ -36,11 +36,8 @@ export default function MenuBar({ onOpen }) {
       {/* ── Left: avatar + name + nav ── */}
       <div className="flex items-center gap-5">
         {/* Avatar */}
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
-          style={{ background: 'linear-gradient(135deg, #c9966e, #a87850)' }}
-        >
-          KL
+        <div className="w-7 h-7 rounded-full overflow-hidden shrink-0" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>
+          <img src="/icons/mypicture.png" alt="Kusum" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
 
         <span className="text-[14px] font-bold text-gray-800">
@@ -82,9 +79,14 @@ export default function MenuBar({ onOpen }) {
 
       {/* ── Right: degree + datetime ── */}
       <div className="flex items-center gap-4">
-        <span className="text-[12px] text-gray-400 font-medium">
+        <a
+          href="https://viterbigradadmission.usc.edu/programs/masters/msprograms/data-science/ms-applied-data-science/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[12px] text-gray-400 font-medium hover:text-gray-600 transition-colors"
+        >
           MS Applied Data Science · USC
-        </span>
+        </a>
         <span className="text-[13px] text-gray-600 font-medium tabular-nums">
           {dateStr}&nbsp; {timeStr}
         </span>

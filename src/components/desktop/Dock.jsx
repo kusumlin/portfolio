@@ -6,6 +6,7 @@ const IMG_ICONS = {
   notes:    '/icons/notes.jpg',
   chat:     '/icons/messages.jpg',
   terminal: '/icons/music.jpg',
+  music:    '/icons/music.jpg',
   github:   '/icons/github.jpg',
   linkedin: '/icons/linkedin.jpg',
 }
@@ -62,6 +63,7 @@ const BEFORE_SEP = [
   { id: 'gallery',  label: 'Gallery',   Icon: PinkBooksIcon,  action: 'open'   },
   { id: 'terminal', label: 'Skills',    Icon: null,           action: 'open'   },
   { id: 'chat',     label: 'Ask Me',    Icon: null,           action: 'open'   },
+  { id: 'music',    label: 'Listening', Icon: null,           action: 'open'   },
 ]
 
 const AFTER_SEP = [
@@ -73,7 +75,7 @@ const AFTER_SEP = [
 const ALL_CLICKABLE = [...BEFORE_SEP, ...AFTER_SEP]
 
 /* ── Dock ───────────────────────────────────────────── */
-export default function Dock({ openApps, onOpen }) {
+export default function Dock({ openApps, minimizedApps = [], onOpen }) {
   const [hovered, setHovered] = useState(null)
   const [bouncing, setBouncing] = useState(null)
 
@@ -101,7 +103,8 @@ export default function Dock({ openApps, onOpen }) {
   const renderIcon = (item) => {
     const scale = getScale(item.id)
     const isBouncing = bouncing === item.id
-    const isOpen = item.action === 'open' && openApps.includes(item.id)
+    const isOpen       = item.action === 'open' && openApps.includes(item.id)
+    const isMinimized  = item.action === 'open' && minimizedApps.includes(item.id)
     const imgSrc = IMG_ICONS[item.id]
 
     return (
@@ -162,12 +165,15 @@ export default function Dock({ openApps, onOpen }) {
           )}
         </button>
 
-        {/* Open indicator dot */}
-        {isOpen ? (
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'rgba(60,60,60,0.45)', marginTop: 3 }} />
-        ) : (
-          <div style={{ width: 5, height: 5, marginTop: 3 }} />
-        )}
+        {/* Open / minimized indicator dot */}
+        <div style={{
+          width: 5, height: 5, borderRadius: '50%', marginTop: 3,
+          background: isMinimized
+            ? 'rgba(255,180,0,0.7)'
+            : isOpen
+              ? 'rgba(60,60,60,0.45)'
+              : 'transparent',
+        }} />
       </div>
     )
   }
