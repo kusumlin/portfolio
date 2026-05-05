@@ -68,9 +68,9 @@ function AboutTab() {
           { e: '✨', top: '2%',  left: '4%',   size: 15, anim: 'floatA', delay: '0s'   },
           { e: '🌸', top: '4%',  right: '4%',  size: 13, anim: 'floatB', delay: '0.6s' },
           { e: '🚀', top: '20%', left: '14%',   size: 14, anim: 'floatC', delay: '0.4s' },
-          { e: '💫', top: '40%', right: '7%',  size: 13, anim: 'floatA', delay: '1.2s' },
+          { e: '💫', top: '45%', right: '2%',  size: 13, anim: 'floatA', delay: '1.2s' },
           { e: '🌿', top: '45%', left: '2%',   size: 14, anim: 'floatB', delay: '0.9s' },
-          { e: '🏎️', top: '65%', right: '4%',  size: 13, anim: 'floatC', delay: '0.3s' },
+          { e: '🏎️', top: '77%', right: '8%',  size: 14, anim: 'floatC', delay: '0.3s' },
           { e: '🦋', top: '75%', left: '8%',  size: 13, anim: 'floatA', delay: '1.5s' },
           { e: '🪼', top: '20%', right: '14%',  size: 13, anim: 'floatA', delay: '1.2s' }
         ].map((s, i) => (
