@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { resume } from '../../data/resume'
 
 const PROMPT = `${resume.name.split(' ')[0].toLowerCase()}@portfolio`
@@ -11,8 +11,16 @@ const SEQUENCE = [
       `  ${resume.name}`,
       `  ${resume.title}`,
       `  ${resume.location}`,
+      `  ✦ GPA 4.0 · USC Viterbi`,
     ],
-    delay: 600,
+  },
+  {
+    cmd: 'ls ~/interests/',
+    output: [
+      `\x1b[cat]  machine-learning/     generative-ai/     large-language-models/`,
+      `\x1b[cat]  data-science/         data-analytics/    mlops/`,
+      `\x1b[cat]  nlp/                  ai-for-healthcare/ statistical-modeling/`,
+    ],
   },
   {
     cmd: 'skills --list-all',
@@ -20,31 +28,54 @@ const SEQUENCE = [
       `\x1b[cat]  ◈ ${cat}`,
       ...items.map((item) => `      → ${item}`),
     ]),
-    delay: 2000,
   },
   {
     cmd: 'experience --summary',
     output: resume.experience.map(
       (e) => `  ${e.role} @ ${e.company}  (${e.period})`
     ),
-    delay: 4800,
   },
   {
-    cmd: 'echo $STATUS',
-    output: ['  Open to opportunities in data science & ML ✦'],
-    delay: 7000,
+    cmd: 'find / -name "collab-opportunity" 2>/dev/null',
+    output: [
+      `  searching...`,
+      `  🔍 ./data-science/ml-projects`,
+      `  🔍 ./research/applied-ai`,
+      `  🔍 ./internships/summer-2026`,
+      `  ✅ found 3 match(es) — reach out to claim!`,
+    ],
+  },
+  {
+    cmd: 'echo $AVAILABILITY',
+    output: [
+      `  \x1b[green]  ● open to internships, research & full-time roles ✦`,
+    ],
+  },
+  {
+    cmd: 'ping kusum --message "let\'s build something"',
+    output: [
+      `  PING kusumlin@usc.edu`,
+      `  64 bytes from kusum: time=0.1ms  ♡`,
+      `  response: "yes, let's talk!"`,
+    ],
   },
 ]
 
 /* Strip our fake ANSI colour marker */
 function renderLine(line) {
-  if (line.startsWith('\x1b[cat]')) {
-    return <span className="text-amber-300 font-semibold">{line.replace('\x1b[cat]', '')}</span>
+  if (line.includes('\x1b[cat]') && line.includes('/')) {
+    return <span className="text-sky-300">{line.replace(/\s*\x1b\[cat\]/, '')}</span>
+  }
+  if (line.includes('\x1b[cat]')) {
+    return <span className="text-amber-300 font-semibold">{line.replace(/\s*\x1b\[cat\]/, '')}</span>
   }
   if (line.trim().startsWith('→')) {
     return <span className="text-violet-300">{line}</span>
   }
-  if (line.trim().startsWith('Open to')) {
+  if (line.includes('\x1b[green]')) {
+    return <span className="text-emerald-400 font-semibold">{line.replace(/\s*\x1b\[green\]/, '')}</span>
+  }
+  if (line.trim().startsWith('Open to') || line.trim().startsWith('●')) {
     return <span className="text-emerald-400">{line}</span>
   }
   return <span className="text-gray-300">{line}</span>
@@ -66,7 +97,7 @@ function useTypewriter(text, start, speed = 38) {
   return displayed
 }
 
-function CommandBlock({ cmd, output, active, done, onDone }) {
+function CommandBlock({ cmd, output, active, onDone }) {
   const typed = useTypewriter(cmd, active)
   const [showOutput, setShowOutput] = useState(false)
 
@@ -108,7 +139,7 @@ export default function Terminal() {
   const [phase, setPhase] = useState(0)
   const bottomRef = useRef(null)
 
-  const advance = () => setPhase((p) => p + 1)
+  const advance = useCallback(() => setPhase((p) => p + 1), [])
 
   useEffect(() => {
     const t = setTimeout(() => setPhase(1), 400)
